@@ -21,7 +21,7 @@
 
                             2.    Content-Security-Policy: default-src:none  script-src:hash/nonceValue style-src:hash/nonceValue
 
-                            This is allow page to only load scripts and style which contain that particular nonce/hash attribute.
+                            This allow's page to only load scripts and style which contain that particular nonce/hash attribute.
 
 
                         
