@@ -3,7 +3,8 @@
                    
 
 --importance
-                            Event bubbling enables event delegation. We want to run some code when the user interacts with any child elements, for this we can set the event listener on their parent and have events that happen on any
+                            Event bubbling enables event delegation. We want to run some code when the user interacts with any child elements,
+                            for this we can set the event listener on their parent and have events that happen on any
                             child elements bubble up to their parent and than use event.target to access the child elements.
                             It will improve performance.
                             Allows you to write cleaner code, and create fewer event listeners with similar logic.

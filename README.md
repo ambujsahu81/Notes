@@ -8,7 +8,7 @@ This includes notably:
 
   - _[ Design patterns ](Design_patterns)_: [Fluent Interface](Design_patterns/fluent.interface.txt)
   - _[ Security ](Security)_: [Content Security Policy](Security/content.security.policy.txt)
-  - _[ Javascript_Building_blocks ](JS_Building_Blocks)_: [Event Delegation](Javascript_Building_blocks/event.delegation.txt)
+  - _[ Javascript_Building_blocks ](JS_Building_Blocks)_: [Event Delegation](JS_Building_Blocks/event.delegation.txt)
 
 
 
@@ -23,7 +23,7 @@ This includes notably:
     - [Content Security Policy](Security/content.security.policy.txt)
 
  - __JS_Building_Blocks__
-    - [Event Delegation](Javascript_Building_blocks/event.delegation.txt)
+    - [Event Delegation](JS_Building_Blocks/event.delegation.txt)
 
 
 
