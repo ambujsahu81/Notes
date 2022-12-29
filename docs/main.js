@@ -61,8 +61,7 @@ const fetchNotesList = async () => {
     try {
         const response = await fetch( urlWithHeaders( concat( repoUrl, Readme, skip(1), backSlash  ) ) )
         if (response.ok) {
-            console.log(response);
-            return  response.text();              
+            return await response.json();              
         }
         handleError( new Error(`${response.status}`) )    
     } catch (error) {
@@ -72,8 +71,8 @@ const fetchNotesList = async () => {
 
 const intialize = async () => {
     const response = await fetchNotesList();
-    parseNotes(response);
-    console.log('does it work');
+    const decodeBase64Str = atob(response.content);
+    parseNotes(decodeBase64Str);
     // to-do getContent()
     updateDom(); 
 }
