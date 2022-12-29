@@ -33,6 +33,9 @@ const updateDom = () => {
 }
 
 const parseNotes = ( str ) => {
+    if ( !str ) { 
+        return;
+    }
     let arrOfcategory = str.trim().split("- __")
     arrOfcategory.shift();
 
@@ -58,7 +61,7 @@ const fetchNotesList = async () => {
     try {
         const response = await fetch( urlWithHeaders( concat( repoUrl, Readme, skip(1), backSlash  ) ) )
         if (response.ok) {
-            console.log(respose);
+            console.log(response);
             return  response.text();              
         }
         handleError( new Error(`${response.status}`) )    
