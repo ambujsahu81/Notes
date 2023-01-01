@@ -1,4 +1,3 @@
-const listOfNotes = [];
 const repoUrl = 'https://api.github.com/repos/ambujsahu81/Notes/contents'
 const noteExtension = '.txt'
 const Readme = 'README.md'
@@ -6,9 +5,12 @@ const backSlash = '/'
 const colorBlue = '#2D67EF'
 const colorPink = '#F48C8C'
 const colorBlack = '#0F0F0F'
+const whiteColor = '#FFFFFF'
 const grey = '#EEEEEE'
 const normalSize = '1rem';
 const bigSize = "1.1rem";
+let goBackBtn = ''
+let listOfNotes = [];
 
 
 const skip = (num) => new Array(num);
@@ -40,25 +42,24 @@ const hovereffect = ( flag, element ) => {
     } else {
         element.style.color = `${colorBlack}`
     }
+}
 
+const showList = ()=> {
+    getDomElement('List').style.display = 'block'
+    getDomElement('content').style.display = 'none'
+    goBackBtn.display = 'none'
+    localStorage.removeItem("Note");
+    getDomElement('Title').textContent = 'Small collection of usefull notes'
 }
 
 
 const updateDom = () => {
 
-    getDomElement('Title').textContent = 'Small collection of usefull notes'
-
-    // align content elements
-    const wrapperStyle = getDomElement('wrapper').style 
-    wrapperStyle.display = 'flex';
-    wrapperStyle.flexDirection = 'column'
-    wrapperStyle.alignItems = 'center'
-    wrapperStyle.fontFamily = ' system-ui'
-
-
+    showList();
     let listElement =  getDomElement('List');
     listElement.style.marginLeft = '-4%'
-    const customUL = document.createElement('ul');
+    listElement.innerHTML = ''
+    const customUL = document.createElement('ul');    
     let index = 0;    
     for ( const note of listOfNotes ) {
         const newLiElement = document.createElement('li');
@@ -87,6 +88,49 @@ const updateDom = () => {
     }
     customUL.addEventListener('click', (evt) => showContent(evt));
     listElement.appendChild(customUL)
+}
+
+const showContent = (evt) => {
+    goBackBtn.display = 'block'
+    let index = -1
+    let note = skip(1)
+
+    if(typeof evt === 'number') {
+        index = evt
+        note = listOfNotes[evt]
+    } else {
+        index = +evt.target.id.replace('li','')
+        note = listOfNotes[index]
+    }
+
+    localStorage.setItem("Note", index);
+   
+    getDomElement('Title').textContent = note.title;
+    getDomElement('List').style.display = 'none'
+    const content = getDomElement('content');
+    content.innerHTML = ''
+    content.style.display = 'block'
+    content.style.width = '65%'
+    let sectionindex = 0;
+    for( const sectionHeader of note.content.headers ) {
+
+        const header = document.createElement('h3');
+        header.id = `h1${sectionindex}`
+        header.textContent = sectionHeader;
+        header.style.margin = '1rem'
+
+        const paragraph = document.createElement('p');
+        paragraph.id = `P${sectionindex}`
+        console.log(note.content.paragraph[sectionindex])
+        paragraph.innerText = note.content.paragraph[sectionindex]
+        paragraph.style.margin = '1rem'
+        paragraph.style.padding = '1rem'
+
+        paragraph.style.background = grey
+        sectionindex++;
+      content.appendChild(header);
+      content.appendChild(paragraph);
+    }
 }
 
 
@@ -139,37 +183,7 @@ const parseContent = ( str , index ) => {
 
 }
 
-const showContent = (evt) => {
-    const index = +evt.target.id.replace('li','')
-    const note = listOfNotes[index]
 
-    console.log(note, index)
-    
-    getDomElement('Title').textContent = note.title;
-    getDomElement('List').style.display = 'none'
-    const content = getDomElement('content');
-    content.style.width = '75%'
-    let sectionindex = 0;
-    for( const sectionHeader of note.content.headers ) {
-
-        const header = document.createElement('h3');
-        header.id = `h1${sectionindex}`
-        header.textContent = sectionHeader;
-        header.style.margin = '1rem'
-
-        const paragraph = document.createElement('p');
-        paragraph.id = `P${sectionindex}`
-        console.log(note.content.paragraph[sectionindex])
-        paragraph.innerText = note.content.paragraph[sectionindex]
-        paragraph.style.margin = '1rem'
-        paragraph.style.padding = '1rem'
-
-        paragraph.style.background = grey
-        sectionindex++;
-      content.appendChild(header);
-      content.appendChild(paragraph);
-    }
-}
 
 // fetch calls
 const fetchNotesList = async () => {
@@ -210,7 +224,29 @@ const fetchNoteContent = async () => {
     }
 }
 
+updateIntialPage = () =>{
+    // align content elements
+    const wrapperStyle = getDomElement('wrapper').style
+    wrapperStyle.display = 'flex';
+    wrapperStyle.flexDirection = 'column'
+    wrapperStyle.alignItems = 'center'
+    wrapperStyle.fontFamily = ' system-ui'
+
+    const btnWrapper = getDomElement('btnWrapper').style
+    btnWrapper.display = 'flex'
+    btnWrapper.width = '65%'
+    btnWrapper.alignItems = 'flex-start'
+
+    goBackBtn = getDomElement('gobackbtn').style
+    goBackBtn.background = whiteColor
+    goBackBtn.border = '2px solid';
+    goBackBtn.padding = '0.5rem'
+    goBackBtn.marginLeft = '1rem'
+    goBackBtn.display = 'none'
+}
+
 const intialize = async () => {
+    updateIntialPage()
     // fetch notes
     const response = await fetchNotesList();
     parseNotes(decodeBase64Str( response?.content ));
@@ -222,7 +258,14 @@ const intialize = async () => {
         parseContent( decodeBase64Str( content ) , index );
         index++;
     }
-    updateDom(); 
+
+    if ( localStorage.getItem('Note') ) {
+        const noteIndex = +localStorage.getItem('Note')
+        showContent(noteIndex)
+    } else {
+        updateDom(); 
+    }
+
 }
 
 intialize();
