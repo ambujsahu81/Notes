@@ -111,6 +111,7 @@ const showContent = (evt) => {
     content.innerHTML = ''
     content.style.display = 'block'
     content.style.width = '65%'
+    content.style.overflowX = "scroll";
     let sectionindex = 0;
     for( const sectionHeader of note.content.headers ) {
 
