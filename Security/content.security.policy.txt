@@ -4,7 +4,7 @@
 
 --importance
                             An added layer of security that helps to detect and mitigate certain types of attacks,
-                            including Cross-Site Scripting (XSS) and data injection attacks. Can be used
+                            including Cross-Site Scripting (XSS) and data injection attacks.
 --ways to implement     
                             Can be added by configuring the web server to return the Content-Security-Policy HTTP header.
                             The <meta> element can be used to configure a policy. example
