@@ -1,6 +1,6 @@
 # Notes
 
-This repository contains notes I took when reading IT-related articles.
+This repository contains small collection usefull notes.
 
 It is primarly intended for my own usage.
 
