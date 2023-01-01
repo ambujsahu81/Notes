@@ -110,8 +110,7 @@ const showContent = (evt) => {
     const content = getDomElement('content');
     content.innerHTML = ''
     content.style.display = 'block'
-    content.style.width = '65%'
-    content.style.overflowX = "scroll";
+    content.style.width = '65%' 
     let sectionindex = 0;
     for( const sectionHeader of note.content.headers ) {
 
@@ -126,6 +125,7 @@ const showContent = (evt) => {
         paragraph.innerText = note.content.paragraph[sectionindex]
         paragraph.style.margin = '1rem'
         paragraph.style.padding = '1rem'
+        paragraph.style.overflowX = "scroll";
 
         paragraph.style.background = grey
         sectionindex++;
