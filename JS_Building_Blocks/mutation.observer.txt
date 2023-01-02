@@ -1,0 +1,42 @@
+                   
+   Mutation Observer  
+                   
+
+--importance
+                            MutationObserver interface provides the ability to watch for changes being made to the DOM tree
+                            Invokes a specified callback function when DOM changes occur.
+                            When the callback is triggered, it is supplied a list of the changes to the DOM, which you can
+                            then loop through and choose to react to.
+--disconnect()     
+                            Stops the MutationObserver instance from receiving further notifications until and unless observe() is called again.  
+--observe()
+                            Configures the MutationObserver to begin receiving notifications through its callback function when DOM changes matching the given options occur.
+--takeRecords()
+                            Removes all pending notifications from the MutationObserver's notification queue and returns them in a new Array of MutationRecord objects.
+--example
+                                var MutationObserver = window.MutationObserver || window.WebKitMutationObserver || window.MozMutationObserver;
+                                var list = document.querySelector('ol');                                
+                                var observer = new MutationObserver(function(mutations) {  
+                                  mutations.forEach(function(mutation) {
+                                    if (mutation.type === 'childList') {
+                                      var list_values = [].slice.call(list.children)
+                                          .map( function(node) { return node.innerHTML; })
+                                          .filter( function(s) {
+                                            if (s === '<br>') {
+                                              return false;
+                                            }
+                                            else {
+                                              return true;
+                                            }
+                                      });
+                                      console.log(list_values);
+                                    }
+                                  });
+                                });
+                                
+                                observer.observe(list, {
+                                  attributes: true, 
+                                  childList: true, 
+                                  characterData: true
+                                });
+
