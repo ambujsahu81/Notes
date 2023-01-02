@@ -118,7 +118,7 @@ const showContent = (evt) => {
         header.id = `h1${sectionindex}`
         header.textContent = sectionHeader;
         header.style.margin = '1rem'
-        header.style.background = grey
+
 
         const paragraph = document.createElement('p');
         paragraph.id = `P${sectionindex}`
@@ -127,6 +127,7 @@ const showContent = (evt) => {
         paragraph.style.margin = '1rem'
         paragraph.style.padding = '1rem'
         paragraph.style.overflowX = "scroll";
+        paragraph.style.background = grey
 
         sectionindex++;
       content.appendChild(header);
@@ -154,7 +155,7 @@ const parseNotes = ( str ) => {
         let [ title, path ] = note.split(']');            
             addNote( { title: title.replace('[','') ,
                        category: categoryName,
-                       path: path.replace('(','').replace(')','').replace('\n\n ',''),
+                       path: path.replace('(','').replace(')','').replaceAll('\n','').replaceAll(' ',''),
                        content: '' } )
        }
     }
@@ -252,13 +253,14 @@ const intialize = async () => {
     const response = await fetchNotesList();
     parseNotes(decodeBase64Str( response?.content ));
 
-    // fetch content
+    //fetch content
     const responseContent = await fetchNoteContent();
     let index = 0;
     for ( const { content } of responseContent ) {
         parseContent( decodeBase64Str( content ) , index );
         index++;
     }
+    console.log(listOfNotes)
 
     if ( localStorage.getItem('Note') ) {
         const noteIndex = +localStorage.getItem('Note')
