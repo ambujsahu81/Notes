@@ -67,8 +67,8 @@ const updateDom = () => {
         // update li element
         newLiElement.textContent = note.title;
         newLiElement.style.listStyle = 'auto'
-        newLiElement.style.margin = '0.5rem'
         newLiElement.style.padding = '0.5rem'
+
         newLiElement.id = `li${index}`
         newLiElement.style.cursor = 'pointer'
         newLiElement.setAttribute('onmouseover', `hovereffect( true, li${index} )` )
@@ -118,6 +118,7 @@ const showContent = (evt) => {
         header.id = `h1${sectionindex}`
         header.textContent = sectionHeader;
         header.style.margin = '1rem'
+        header.style.background = grey
 
         const paragraph = document.createElement('p');
         paragraph.id = `P${sectionindex}`
@@ -127,7 +128,6 @@ const showContent = (evt) => {
         paragraph.style.padding = '1rem'
         paragraph.style.overflowX = "scroll";
 
-        paragraph.style.background = grey
         sectionindex++;
       content.appendChild(header);
       content.appendChild(paragraph);
