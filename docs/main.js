@@ -11,8 +11,8 @@ const normalSize = '1rem';
 const bigSize = "1.1rem";
 let goBackBtn = ''
 let listOfNotes = [];
-const colorCollection = [ 'rgb(247 245 194)', 'rgb(241 251 200)','rgb(255 253 197)', 'rgb(235 238 255)','rgb(255 218 218)' ]
-const buttonStyle = `background: ${whiteColor};border:2px solid;padding:0.5rem;marginLeft:1rem;display:none;font-family:monospace;font-size: 0.7rem;`
+const colorCollection = [ 'rgb(255 255 244)', 'rgb(243 249 217)','rgb(253 252 229)', 'rgb(245 247 253)','rgb(249 234 234)' ]
+const buttonStyle = `background: ${whiteColor};border:1px solid;padding:0.5rem;marginLeft:1rem;display:none;font-family:monospace;font-size: 0.7rem;`
 
 const skip = (num) => new Array(num);
 
@@ -43,7 +43,7 @@ const handleWarning = ( err )  => getDomElement('Error').textContent = `Warning:
 
 const removeErrOrWarnings = () => getDomElement('Error').textContent = ''
 
-const updateMainTitle = ( title ) => getDomElement('Title').textContent = title
+const updateMainTitle = ( title ) => getDomElement('Title').innerHTML = title
 
 const urlWithHeaders = ( url ) => concat(url,'Content-Type=application/vnd.github.raw',skip(1),'?')
 
@@ -69,11 +69,11 @@ const getWidth = () => {
 const darkModeJs = () => { 
     if( window.getComputedStyle(document.body).background.includes('rgb(15, 15, 15)')) {
         styleElement(document.body,`background:${whiteColor};color:${colorBlack};`)
-        styleAllElement("button", { 'background':whiteColor, 'border': `2px solid ${colorBlack};`, 'color': `${colorBlack}` })
+        styleAllElement("button", { 'background':whiteColor, 'border': `1px solid ${colorBlack};`, 'color': `${colorBlack}` })
         styleAllElement("p", { 'background':`random`,'color':`${colorBlack}`})        
     } else {
         styleElement(document.body,`background:${colorBlack};color:rosybrown;`)
-        styleAllElement("button", { 'background':colorBlack, 'border': `2px solid ${whiteColor};`, 'color': `rosybrown` })
+        styleAllElement("button", { 'background':colorBlack, 'border': `1px solid ${whiteColor};`, 'color': `rosybrown` })
         styleAllElement("p", { 'background':`${whiteColor}`,'color':`brown`})    
     }
 }
@@ -92,7 +92,7 @@ const showList = ()=> {
     getDomElement('content').style.display = 'none'
     goBackBtn.style.display = 'none'
     localStorage.removeItem("Note");
-    updateMainTitle( 'Small collection of usefull notes' )
+    updateMainTitle( 'Small collection of usefull notes <i class="fa-solid fa-book"></i>' )
 }
 
 
@@ -154,7 +154,7 @@ const showContent = (evt) => {
 
         const header = createDomElement('h3');
         header.id = `h1${sectionindex}`
-        header.textContent = sectionHeader;
+        header.textContent = `# ${sectionHeader}`;
         header.style.margin = '1rem'
 
         const paragraph = createDomElement('p');
@@ -170,6 +170,7 @@ const showContent = (evt) => {
         }        
         paragraph.style.background = getRandomColor()
         paragraph.style.borderRadius = '1rem'
+        paragraph.style.border ='1px solid';
         sectionindex++;
         content.appendChild(header);
         content.appendChild(paragraph);
