@@ -177,7 +177,7 @@ const updateDom = () => {
 
         newLiElement.style.listStyle = 'none'
         newLiElement.id = `li${index}`
-        newLiElement.style.cursor = 'pointer'
+
 
         // add a link tag as well
         const newSpanElementFile = createDomElement('span');
@@ -199,6 +199,7 @@ const updateDom = () => {
         newSpanElement.innerHTML = '<i class="fa-regular fa-file"></i>'
         newSpanElement.style.paddingLeft = '0.2rem'
         newSpanElement.style.fontSize = '1rem'
+        newSpanElement.style.cursor = 'pointer'
         newLiElement.appendChild(newSpanElementFileLine);
         newLiElement.appendChild(newSpanElement);
         newLiElement.appendChild(newSpanElementFile);
@@ -416,10 +417,13 @@ doneLoading = () => {
     }
 }
 (async () => {
-    
+   try{ 
    updateIntialPage();
    await fetchAllData();
    doneLoading();
+   } catch (error) {
+        handleError(error)
+   }
 })();
 
 
