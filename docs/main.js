@@ -182,6 +182,7 @@ const updateDom = () => {
         // add a link tag as well
         const newSpanElementFile = createDomElement('span');
         newSpanElementFile.textContent = `${note.title.replaceAll(' ','_').replace('_','')}.txt`;
+        newSpanElementFile.id = `span${index}`
         newSpanElementFile.style.color = colorBlue
         newSpanElementFile.style.marginLeft = '0.2rem'
         newSpanElementFile.setAttribute('onmouseover', `hovereffect( true, li${index} )` )
@@ -201,9 +202,10 @@ const updateDom = () => {
         newLiElement.appendChild(newSpanElementFileLine);
         newLiElement.appendChild(newSpanElement);
         newLiElement.appendChild(newSpanElementFile);
+        newLiElement.addEventListener('click', (evt) => showContent(evt));
 
         fileListUL.appendChild(newLiElement);
-        fileListUL.addEventListener('click', (evt) => showContent(evt));
+
         index++;
     }
 
@@ -216,11 +218,12 @@ const showContent = (evt) => {
     let index = -1
     let note = skip(1)
 
+
     if(typeof evt === 'number') {
         index = evt
         note = listOfNotes[evt]
     } else {
-        index = +evt.target.id.replace('li','')
+        index = +evt.target.id.replace('span','')
         note = listOfNotes[index]
     }
 
