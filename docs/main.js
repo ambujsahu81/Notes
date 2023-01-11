@@ -109,7 +109,7 @@ const showList = ()=> {
 const updateDom = () => {
     showList();
     let listElement =  getDomElement('List');
-    listElement.style.marginLeft = '4%'
+    listElement.style.marginLeft = '2%'
     listElement.innerHTML = ''
     const root = createDomElement('ul');
     const rootLiElement = createDomElement('li');
