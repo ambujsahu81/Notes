@@ -182,6 +182,7 @@ const updateDom = () => {
         // add a link tag as well
         const newSpanElementFile = createDomElement('span');
         newSpanElementFile.textContent = `${note.title.replaceAll(' ','_').replace('_','')}.txt`;
+        newSpanElementFile.style.cursor = 'pointer'
         newSpanElementFile.id = `span${index}`
         newSpanElementFile.style.color = colorBlue
         newSpanElementFile.style.marginLeft = '0.2rem'
@@ -199,12 +200,10 @@ const updateDom = () => {
         newSpanElement.innerHTML = '<i class="fa-regular fa-file"></i>'
         newSpanElement.style.paddingLeft = '0.2rem'
         newSpanElement.style.fontSize = '1rem'
-        newSpanElement.style.cursor = 'pointer'
         newLiElement.appendChild(newSpanElementFileLine);
         newLiElement.appendChild(newSpanElement);
         newLiElement.appendChild(newSpanElementFile);
         newLiElement.addEventListener('click', (evt) => showContent(evt));
-
         fileListUL.appendChild(newLiElement);
 
         index++;
