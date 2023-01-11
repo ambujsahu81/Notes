@@ -2,23 +2,25 @@ const repoUrl = 'https://api.github.com/repos/ambujsahu81/Notes/contents'
 const noteExtension = '.txt'
 const Readme = 'README.md'
 const backSlash = '/'
-const colorBlue = '#2D67EF'
 const colorPink = '#F48C8C'
 const colorBlack = '#0F0F0F'
 const whiteColor = '#FFFFFF'
 const grey = 'rgb(249 244 244)'
+let colorBlue = 'rgb(109 133 191)'
 const normalSize = '1rem';
 const bigSize = "1.1rem";
 let goBackBtn = ''
 let listOfNotes = [];
-const colorCollection = [ 'rgb(255 255 244)', 'rgb(243 249 217)','rgb(253 252 229)', 'rgb(245 247 253)','rgb(249 234 234)' ]
-const buttonStyle = `background: ${whiteColor};border:1px solid;padding:0.5rem;marginLeft:1rem;display:none;font-family:monospace;font-size: 0.7rem;`
+const colorCollection = [ 'rgb(247 245 194)', 'rgb(241 251 200)','rgb(255 253 197)', 'rgb(235 238 255)','rgb(255 218 218)' ]
+const buttonStyle = `background: ${whiteColor};padding:0.4rem;marginLeft:1rem;display:none;font-family:monospace;font-size: 1rem;`
 
 const skip = (num) => new Array(num);
 
 const addNote = ( { title, category, path, content } ) => listOfNotes.push( { title, category, path, content } )
 
 const getListOfNotes = () => listOfNotes.map( ( { title } ) => title)
+
+const getAllNotesCategory = () => [...new Set(listOfNotes.map( ( { category } ) => category))]
 
 const getAllPath = () => listOfNotes.map( ( { path } ) => path )
 
@@ -55,7 +57,7 @@ const getWidth = () => {
     const deviceWidth = window.screen.width;
     let widthOfContent = '60%'
     switch( true ) {
-       case deviceWidth >= 1366: widthOfContent = '65%';break;
+       case deviceWidth >= 1366: widthOfContent = '62%';break;
        case deviceWidth >= 1266: widthOfContent = '70%';break;
        case deviceWidth >= 1150: widthOfContent = '75%';break;
        case deviceWidth >= 1074: widthOfContent = '80%';break;
@@ -68,12 +70,18 @@ const getWidth = () => {
 
 const darkModeJs = () => { 
     if( window.getComputedStyle(document.body).background.includes('rgb(15, 15, 15)')) {
+//        colorBlue = 'rgb(51 0 255)';
+        // console.log(document.querySelectorAll('allFilesId'))
+        getDomElement('darkMode').innerHTML = '<i class="fa fa-moon"></i>'
         styleElement(document.body,`background:${whiteColor};color:${colorBlack};`)
-        styleAllElement("button", { 'background':whiteColor, 'border': `1px solid ${colorBlack};`, 'color': `${colorBlack}` })
+        styleAllElement("button", { 'background':whiteColor, 'border': `1px solid ${colorBlack}`, 'color': `${colorBlack}` })
         styleAllElement("p", { 'background':`random`,'color':`${colorBlack}`})        
     } else {
-        styleElement(document.body,`background:${colorBlack};color:rosybrown;`)
-        styleAllElement("button", { 'background':colorBlack, 'border': `1px solid ${whiteColor};`, 'color': `rosybrown` })
+  //    styleElement(getDomElement('allFilesId'),`color:rgb(109, 133, 191);`)
+        // console.log(document.querySelectorAll('#allFilesId'))
+        getDomElement('darkMode').innerHTML = '<i class="fa fa-sun"></i>'
+        styleElement(document.body,`background:${colorBlack};color:rgb(187 124 136);`)
+        styleAllElement("button", { 'background':colorBlack, 'border': `1px solid rgb(187 124 136)`, 'color': `rgb(187 124 136)` })
         styleAllElement("p", { 'background':`${whiteColor}`,'color':`brown`})    
     }
 }
@@ -81,54 +89,127 @@ const darkModeJs = () => {
 
 const hovereffect = ( flag, element ) => {
     if ( flag ) {
-        element.style.color = `${colorBlue}`
+        element.style.textDecoration  = `underline`
+        element.style.textDecorationColor = colorBlue;
     } else {
-        element.style.color = `inherit`
+        element.style.textDecoration = `none`
     }
 }
 
 const showList = ()=> {
+    getDomElement('toolBarWrapper').style.justifyContent = 'flex-end'
     getDomElement('List').style.display = 'block'
     getDomElement('content').style.display = 'none'
     goBackBtn.style.display = 'none'
     localStorage.removeItem("Note");
-    updateMainTitle( 'Small collection of usefull notes <i class="fa-solid fa-book"></i>' )
+    updateMainTitle( `Small collection of usefull notes <i class="fa-solid fa-book"></i>` )
 }
 
 
 const updateDom = () => {
     showList();
     let listElement =  getDomElement('List');
-    listElement.style.marginLeft = '-4%'
+    listElement.style.marginLeft = '4%'
     listElement.innerHTML = ''
-    const customUL = createDomElement('ul');    
-    let index = 0;    
-    for ( const note of listOfNotes ) {
-        const newLiElement = createDomElement('li');
+    const root = createDomElement('ul');
+    const rootLiElement = createDomElement('li');
+    rootLiElement.style.listStyle = 'none'
+    const folderList = createDomElement('ul');
+    const newSpanElement = createDomElement('span');
+    newSpanElement.innerHTML = `<i class="fa fa-folder-open"></i>`
+    newSpanElement.style.paddingLeft = '0.5rem'
+    newSpanElement.style.fontSize = '1rem'
+    const newSpanElementCategory = createDomElement('span');
+    newSpanElementCategory.style.paddingLeft = '0.5rem'
+    newSpanElementCategory.style.fontSize = '1rem'
+    newSpanElementCategory.textContent = `root/`
+    rootLiElement.appendChild(newSpanElement);
+    rootLiElement.appendChild(newSpanElementCategory);
+    rootLiElement.appendChild(folderList);
+    folderList.style.borderLeft = '1px solid';
+    folderList.style.marginLeft = '1rem';
+    folderList.style.marginTop = '0rem';
+    folderList.style.paddingTop = '1rem';    
+    folderList.style.paddingLeft =  '0rem';
 
-        // update li element
-        newLiElement.textContent = note.title;
-        newLiElement.style.listStyle = 'auto'
-        newLiElement.style.padding = '0.5rem'
-        newLiElement.id = `li${index}`
-        newLiElement.style.cursor = 'pointer'
-        newLiElement.setAttribute('onmouseover', `hovereffect( true, li${index} )` )
-        newLiElement.setAttribute('onmouseout', `hovereffect( false, li${index} )` )
- 
-        // add a link tag as well
+    root.appendChild(rootLiElement);
+    listElement.appendChild(root);
+
+    for ( const category of getAllNotesCategory() ) {
+        const folderLiElement = createDomElement('li');
+
+        folderLiElement.style.listStyle = 'none'
+        folderLiElement.style.marginTop = '1rem'
+        const newSpanElementFolderLine = createDomElement('span');
+        newSpanElementFolderLine.style.borderBottom = `1px solid`;
+        newSpanElementFolderLine.style.width = '1.5rem';
+        newSpanElementFolderLine.style.display = 'inline-block';
+        newSpanElementFolderLine.style.marginBottom = '0.3rem';
+
         const newSpanElement = createDomElement('span');
-        newSpanElement.innerHTML = '&#8594;'
+        newSpanElement.innerHTML = `<i class="fa fa-folder-open"></i>`
         newSpanElement.style.paddingLeft = '0.5rem'
         newSpanElement.style.fontSize = '1rem'
+        const newSpanElementCategory = createDomElement('span');
+        newSpanElementCategory.style.paddingLeft = '0.5rem'
+        newSpanElementCategory.style.fontSize = '1rem'
+        newSpanElementCategory.textContent = `${category}/`
+        folderLiElement.appendChild(newSpanElementFolderLine);
+        folderLiElement.appendChild(newSpanElement);
+        folderLiElement.appendChild(newSpanElementCategory);
+
+        const fileList = createDomElement('ul');
+        fileList.style.marginLeft = '1rem'
+        fileList.style.paddingBottom = '0rem'
+        fileList.style.paddingLeft = '0rem'
+        fileList.id = `category${category.replaceAll(" ","")}ul`
+        folderLiElement.appendChild(fileList)
+        folderList.appendChild(folderLiElement);
+    }
+
+    let index = 0;    
+    for ( const note of listOfNotes ) {
+        const fileListUL = getDomElement(`category${note.category.replaceAll(" ","")}ul`)
+        const newLiElement = createDomElement('li');
+        // update li element
+
+        newLiElement.style.listStyle = 'none'
+        newLiElement.id = `li${index}`
+        newLiElement.style.cursor = 'pointer'
+
+        // add a link tag as well
+        const newSpanElementFile = createDomElement('span');
+        newSpanElementFile.textContent = `${note.title.replaceAll(' ','_').replace('_','')}.txt`;
+        newSpanElementFile.style.color = colorBlue
+        newSpanElementFile.style.marginLeft = '0.5rem'
+        newSpanElementFile.setAttribute('onmouseover', `hovereffect( true, li${index} )` )
+        newSpanElementFile.setAttribute('onmouseout', `hovereffect( false, li${index} )` )
+        const newSpanElementFileLine = createDomElement('span');
+        newSpanElementFileLine.style.borderBottom = `1px solid`;
+        newSpanElementFileLine.style.borderLeft = `1px solid`;
+        newSpanElementFileLine.style.height = `1.5rem`
+        newSpanElementFileLine.style.width = '2rem';
+        newSpanElementFileLine.style.display = 'inline-block';
+        newSpanElementFileLine.style.marginBottom = '0.3rem';
+        newSpanElementFileLine.style.marginLeft = '1.5rem'
+        const newSpanElement = createDomElement('span');
+        newSpanElement.innerHTML = '<i class="fa-regular fa-file"></i>'
+        newSpanElement.style.paddingLeft = '0.5rem'
+        newSpanElement.style.fontSize = '1rem'
+        newLiElement.appendChild(newSpanElementFileLine);
         newLiElement.appendChild(newSpanElement);
-        customUL.appendChild(newLiElement);
+        newLiElement.appendChild(newSpanElementFile);
+
+        fileListUL.appendChild(newLiElement);
+        fileListUL.addEventListener('click', (evt) => showContent(evt));
         index++;
     }
-    customUL.addEventListener('click', (evt) => showContent(evt));
-    listElement.appendChild(customUL)
+
+
 }
 
 const showContent = (evt) => {
+    getDomElement('toolBarWrapper').style.justifyContent = 'space-between'
     goBackBtn.style.display = 'block'
     let index = -1
     let note = skip(1)
@@ -154,7 +235,7 @@ const showContent = (evt) => {
 
         const header = createDomElement('h3');
         header.id = `h1${sectionindex}`
-        header.textContent = `# ${sectionHeader}`;
+        header.textContent = sectionHeader;
         header.style.margin = '1rem'
 
         const paragraph = createDomElement('p');
@@ -170,7 +251,6 @@ const showContent = (evt) => {
         }        
         paragraph.style.background = getRandomColor()
         paragraph.style.borderRadius = '1rem'
-        paragraph.style.border ='1px solid';
         sectionindex++;
         content.appendChild(header);
         content.appendChild(paragraph);
@@ -288,26 +368,29 @@ updateIntialPage = () =>{
     styleElement(wrapper,'display:flex;flex-direction:column;align-items:center;font-family:monospace;font-size: 0.9rem;')
 
     const toolBarWrapper = getDomElement('toolBarWrapper')
-    styleElement(toolBarWrapper,`display:flex;align-items:flex-start;justify-content:space-between;width:${getWidth()}`)
+    styleElement(toolBarWrapper,`display:flex;align-items:flex-start;justify-content:space-between;width:${getWidth()};padding-inline:1rem;`)
     const toggleDarkMode = createDomElement('button');
     toggleDarkMode.id = 'darkMode'
-    toggleDarkMode.textContent = 'Toggle dark mode';
+    toggleDarkMode.innerHTML = `<i class="fa fa-sun"></i>`;
+
     toggleDarkMode.setAttribute('onclick', 'darkModeJs()')
     styleElement(toggleDarkMode,buttonStyle);
-    toolBarWrapper.appendChild(toggleDarkMode)
+
 
     goBackBtn = createDomElement('button');
     goBackBtn.id = 'gobackbtn'
     goBackBtn.setAttribute('onclick', 'updateDom()')
-    goBackBtn.textContent = 'Go back'
+    goBackBtn.innerHTML = '<i class="fa fa-arrow-left-long"></i>'
     styleElement(goBackBtn,buttonStyle)
     toolBarWrapper.appendChild(goBackBtn)
-
+    toolBarWrapper.appendChild(toggleDarkMode)
+    darkModeJs()
  
 }
 
 doneLoading = () => {
     removeErrOrWarnings();
+
     getDomElement('darkMode').style.display = 'block'
     if ( localStorage.getItem('Note') ) {
         const noteIndex = +localStorage.getItem('Note')
@@ -316,8 +399,8 @@ doneLoading = () => {
         updateDom(); 
     }
 }
-
 (async () => {
+    
    updateIntialPage();
    await fetchAllData();
    doneLoading();
