@@ -11,7 +11,7 @@ const normalSize = '1rem';
 const bigSize = "1.1rem";
 let goBackBtn = ''
 let listOfNotes = [];
-const colorCollection = [ 'rgb(247 245 194)', 'rgb(241 251 200)','rgb(255 253 197)', 'rgb(235 238 255)','rgb(255 218 218)' ]
+const colorCollection = [ 'rgb(247 245 194)', 'rgb(241 251 200)','rgb(255 253 197)','rgb(255 218 218)' ]
 const buttonStyle = `background: ${whiteColor};padding:0.4rem;marginLeft:1rem;display:none;font-family:monospace;font-size: 1rem;`
 
 const skip = (num) => new Array(num);
@@ -75,14 +75,16 @@ const darkModeJs = () => {
         getDomElement('darkMode').innerHTML = '<i class="fa fa-moon"></i>'
         styleElement(document.body,`background:${whiteColor};color:${colorBlack};`)
         styleAllElement("button", { 'background':whiteColor, 'border': `1px solid ${colorBlack}`, 'color': `${colorBlack}` })
-        styleAllElement("p", { 'background':`random`,'color':`${colorBlack}`})        
+        styleAllElement("p", { 'color':`${colorBlack}`}) 
+        styleAllElement("h3", { 'color':`${colorBlack}`})            
     } else {
   //    styleElement(getDomElement('allFilesId'),`color:rgb(109, 133, 191);`)
         // console.log(document.querySelectorAll('#allFilesId'))
         getDomElement('darkMode').innerHTML = '<i class="fa fa-sun"></i>'
         styleElement(document.body,`background:${colorBlack};color:rgb(187 124 136);`)
         styleAllElement("button", { 'background':colorBlack, 'border': `1px solid rgb(187 124 136)`, 'color': `rgb(187 124 136)` })
-        styleAllElement("p", { 'background':`${whiteColor}`,'color':`brown`})    
+        styleAllElement("h3", { 'color':`rgb(155 42 64)`})
+        styleAllElement("p", { 'color':`rgb(213 0 41)`})    
     }
 }
 
@@ -232,31 +234,42 @@ const showContent = (evt) => {
     content.style.width = getWidth(); 
     let sectionindex = 0;
     for( const sectionHeader of note.content.headers ) {
+        const card = createDomElement('div');
 
         const header = createDomElement('h3');
         header.id = `h1${sectionindex}`
-        header.textContent = sectionHeader;
-        header.style.margin = '1rem'
+        header.textContent = `# ${sectionHeader}`;
+        header.style.padding = '0.3rem'
+        // header.style.margin = '1rem'
 
         const paragraph = createDomElement('p');
         paragraph.id = `P${sectionindex}`
         paragraph.innerHTML = note.content.paragraph[sectionindex].replaceAll('\n','<br>').replaceAll('                            ',' ').replaceAll(' ','&nbsp;')
-        paragraph.style.margin = '1rem'
+        // paragraph.style.margin = '1rem'
         paragraph.style.padding = '1rem'
+        paragraph.style.marginTop = '-1rem'
         if ( note.content.paragraph[sectionindex].includes('=') ) {
            paragraph.style.overflowX = "scroll";
         } else {
            paragraph.style.whiteSpace = "normal" 
            paragraph.style.overflowWrap = "anywhere"
-        }        
-        paragraph.style.background = getRandomColor()
-        paragraph.style.borderRadius = '1rem'
+        } 
+        paragraph.style.borderBottomLeftRadius = '1rem' 
+        paragraph.style.borderBottomRightRadius = '1rem'
+        paragraph.style.background = whiteColor
+        paragraph.style.marginBottom = '1rem'
+        card.style.paddingInline = '0.5rem'     
+        card.style.background = getRandomColor()
+        card.style.borderRadius = '1rem'
         sectionindex++;
-        content.appendChild(header);
-        content.appendChild(paragraph);
+
+        card.appendChild(header);
+        card.appendChild(paragraph);
+        content.appendChild(card)
     }
     if(window.getComputedStyle(document.body).background.includes('rgb(15, 15, 15)')) {
-        styleAllElement("p", { 'background':`${whiteColor}`,'color':`brown`});
+        styleAllElement("h3", { 'color':`rgb(155 42 64)`})
+        styleAllElement("p", { 'color':`rgb(213 0 41)`})  
     }
 }
 
