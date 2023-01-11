@@ -142,13 +142,13 @@ const updateDom = () => {
         folderLiElement.style.marginTop = '1rem'
         const newSpanElementFolderLine = createDomElement('span');
         newSpanElementFolderLine.style.borderBottom = `1px solid`;
-        newSpanElementFolderLine.style.width = '1.5rem';
+        newSpanElementFolderLine.style.width = '1.2rem';
         newSpanElementFolderLine.style.display = 'inline-block';
         newSpanElementFolderLine.style.marginBottom = '0.3rem';
 
         const newSpanElement = createDomElement('span');
         newSpanElement.innerHTML = `<i class="fa fa-folder-open"></i>`
-        newSpanElement.style.paddingLeft = '0.5rem'
+        newSpanElement.style.paddingLeft = '0.2rem'
         newSpanElement.style.fontSize = '1rem'
         const newSpanElementCategory = createDomElement('span');
         newSpanElementCategory.style.paddingLeft = '0.5rem'
@@ -181,7 +181,7 @@ const updateDom = () => {
         const newSpanElementFile = createDomElement('span');
         newSpanElementFile.textContent = `${note.title.replaceAll(' ','_').replace('_','')}.txt`;
         newSpanElementFile.style.color = colorBlue
-        newSpanElementFile.style.marginLeft = '0.5rem'
+        newSpanElementFile.style.marginLeft = '0.2rem'
         newSpanElementFile.setAttribute('onmouseover', `hovereffect( true, li${index} )` )
         newSpanElementFile.setAttribute('onmouseout', `hovereffect( false, li${index} )` )
         const newSpanElementFileLine = createDomElement('span');
@@ -191,10 +191,10 @@ const updateDom = () => {
         newSpanElementFileLine.style.width = '2rem';
         newSpanElementFileLine.style.display = 'inline-block';
         newSpanElementFileLine.style.marginBottom = '0.3rem';
-        newSpanElementFileLine.style.marginLeft = '1.5rem'
+        newSpanElementFileLine.style.marginLeft = '1rem'
         const newSpanElement = createDomElement('span');
         newSpanElement.innerHTML = '<i class="fa-regular fa-file"></i>'
-        newSpanElement.style.paddingLeft = '0.5rem'
+        newSpanElement.style.paddingLeft = '0.2rem'
         newSpanElement.style.fontSize = '1rem'
         newLiElement.appendChild(newSpanElementFileLine);
         newLiElement.appendChild(newSpanElement);
