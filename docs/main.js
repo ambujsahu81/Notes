@@ -213,7 +213,7 @@ const updateDom = () => {
 }
 
 const showContent = (evt) => {
-    getDomElement('toolBarWrapper').style.justifyContent = 'space-between'
+
     let index = -1
     let note = skip(1)
 
@@ -269,6 +269,7 @@ const showContent = (evt) => {
         card.appendChild(paragraph);
         content.appendChild(card)
         goBackBtn.style.display = 'block'
+        getDomElement('toolBarWrapper').style.justifyContent = 'space-between'
     }
     if(window.getComputedStyle(document.body).background.includes('rgb(15, 15, 15)')) {
         styleAllElement("h3", { 'color':`rgb(155 42 64)`})
