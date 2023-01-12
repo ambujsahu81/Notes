@@ -178,10 +178,11 @@ const updateDom = () => {
         newLiElement.style.listStyle = 'none'
         newLiElement.id = `li${index}`
         newLiElement.style.cursor = 'pointer'
+        console.log(note)
 
         // add a link tag as well
         const newSpanElementFile = createDomElement('span');
-        newSpanElementFile.textContent = `${note.title.replaceAll(' ','_').replace('_','')}.txt`;
+        newSpanElementFile.textContent = `${note.path.slice(note.path.indexOf('/')+1,note.path.length)}`;
         newSpanElementFile.id = `span${index}`
         newSpanElementFile.style.color = colorBlue
         newSpanElementFile.style.marginLeft = '0.2rem'
