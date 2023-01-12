@@ -177,12 +177,12 @@ const updateDom = () => {
 
         newLiElement.style.listStyle = 'none'
         newLiElement.id = `li${index}`
-        newLiElement.style.cursor = 'pointer'
-        console.log(note)
+
 
         // add a link tag as well
         const newSpanElementFile = createDomElement('span');
         newSpanElementFile.textContent = `${note.path.slice(note.path.indexOf('/')+1,note.path.length)}`;
+        newSpanElementFile.style.cursor = 'pointer'
         newSpanElementFile.id = `span${index}`
         newSpanElementFile.style.color = colorBlue
         newSpanElementFile.style.marginLeft = '0.2rem'
@@ -204,7 +204,6 @@ const updateDom = () => {
         newLiElement.appendChild(newSpanElement);
         newLiElement.appendChild(newSpanElementFile);
         newLiElement.addEventListener('click', (evt) => showContent(evt));
-
         fileListUL.appendChild(newLiElement);
 
         index++;
@@ -214,8 +213,7 @@ const updateDom = () => {
 }
 
 const showContent = (evt) => {
-    getDomElement('toolBarWrapper').style.justifyContent = 'space-between'
-    goBackBtn.style.display = 'block'
+
     let index = -1
     let note = skip(1)
 
@@ -270,6 +268,8 @@ const showContent = (evt) => {
         card.appendChild(header);
         card.appendChild(paragraph);
         content.appendChild(card)
+        goBackBtn.style.display = 'block'
+        getDomElement('toolBarWrapper').style.justifyContent = 'space-between'
     }
     if(window.getComputedStyle(document.body).background.includes('rgb(15, 15, 15)')) {
         styleAllElement("h3", { 'color':`rgb(155 42 64)`})
@@ -417,10 +417,13 @@ doneLoading = () => {
     }
 }
 (async () => {
-    
+   try{ 
    updateIntialPage();
    await fetchAllData();
    doneLoading();
+   } catch (error) {
+        handleError(error)
+   }
 })();
 
 
