@@ -8,10 +8,10 @@
   It will improve performance.
   Allows you to write cleaner code, and create fewer event listeners with similar logic.
 
-## event.target api     
+## `event.target` api     
   It is used to access the element that was the target of the event (that is, the innermost element).  
 
-## event.currentTarget api
+## `event.currentTarget` api
   It is used to access the element that handled the event.
 
 ## `event.stopPropagation()`
