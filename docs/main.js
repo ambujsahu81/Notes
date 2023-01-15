@@ -47,7 +47,7 @@ const removeErrOrWarnings = () => getDomElement('Error').textContent = ''
 
 const updateMainTitle = ( title ) => getDomElement('Title').innerHTML = title
 
-const urlWithHeaders = ( url ) => concat(url,'Content-Type=application/vnd.github.raw',skip(1),'?')
+const urlWithHeaders = ( url ) => concat(url,'ref=styles',skip(1),'?')
 
 const decodeBase64Str = ( str ) =>  atob( str )
 
