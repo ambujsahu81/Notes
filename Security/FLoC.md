@@ -10,7 +10,7 @@
   and uses on-device processing to keep a person’s web history private on the browser.
   These groups (or "cohorts") are generated through algorithms (that's the "federated learning" bit).
                             
-## why FLoC was introfuced             
+## why FLoC was introduced             
   cookie tracking has become more and more invasive. Embedded, far-reaching trackers known as third-party cookies keep 
   tabs on users as they move across multiple websites, while advertisers also use an invasive technique called 
   fingerprinting to know who you are even with anti-tracking measures turned on (through your use of fonts,
