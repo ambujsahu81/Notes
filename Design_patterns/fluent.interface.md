@@ -4,7 +4,7 @@
 
 Makes your code much easier to read and to write. 
 
-### without Fluent api
+## without Fluent api
 
 ```js
  // with variables                        
@@ -18,7 +18,8 @@ Makes your code much easier to read and to write.
   calc.display(calc.square(calc.add(1, 2)));
 ```
 
-### with Fluent api
+## with Fluent api
+
 ```js           
   calc
       .add(1, 2)
@@ -26,7 +27,8 @@ Makes your code much easier to read and to write.
       .display();
 ```
 
-### Real world example
+## Real world example
+
 ```js
   var $ = new jQuery();
       $("input")
@@ -35,7 +37,7 @@ Makes your code much easier to read and to write.
   // jQuery has its fluent API to thank for its simplicity
 ```
 
-### core principles
+## core principles
   Any fluent methods must return the parent object.
   Fluent apis mutate the object itself.
 

@@ -6,19 +6,20 @@
   When the callback is triggered, it is supplied a list of the changes to the DOM, which you can
   then loop through and choose to react to.
 
-### `disconnect()`     
+## `disconnect()`     
   Stops the MutationObserver instance from receiving further notifications until and unless observe() is called 
   again.
 
-### `observe()`
+## `observe()`
   Configures the MutationObserver to begin receiving notifications through its callback function when DOM 
   changes matching the given options occur.
 
-### `takeRecords()`
+## `takeRecords()`
   Removes all pending notifications from the MutationObserver's notification queue and returns them in a new 
   Array of MutationRecord objects.
 
-### example
+## example
+
   ```js
   / Select the node that will be observed for mutations
     const targetNode = document.getElementById('some-id');
