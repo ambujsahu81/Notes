@@ -9,7 +9,7 @@ This includes notably:
   - _[ Design patterns ](Design_patterns)_: [Fluent Interface](Design_patterns/fluent.interface.md)
   - _[ Security ](Security)_: [Content Security Policy](Security/content.security.policy.md), [Federated Learning of Cohorts](Security/FLoC.md)
   - _[ Javascript Building Blocks ](JS_Building_Blocks)_: [Event Delegation](JS_Building_Blocks/event.delegation.md), [MutationObserver](JS_Building_Blocks/mutation.observer.md), [Bookmarklet collection](JS_Building_Blocks/bookmarklet.collection.md), [Reflect APIs](JS_Building_Blocks/reflect.api.md)
-  - _[ Typescript ](Typescript)_: [InterFace vs Types](Typescript/interface.vs.types.md)
+  - _[ Typescript ](Typescript)_: [Interface vs Types](Typescript/interface.vs.types.md)
 
 
 
@@ -31,7 +31,7 @@ This includes notably:
     - [Reflect APIs](JS_Building_Blocks/reflect.api.md)
     
  - __TypeScript__
-    - [InterFace vs Types](Typescript/interface.vs.types.md)
+    - [Interface vs Types](Typescript/interface.vs.types.md)
 
 
 
