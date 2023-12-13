@@ -31,7 +31,11 @@ This includes notably:
     - [Reflect APIs](JS_Building_Blocks/reflect.api.md)
     
  - __TypeScript__
-    - [Interface vs Types](Typescript/interface.vs.types.md)
+    - [Interface vs Types](Typescript/interface.vs.types.md)    
+
+ - __AWS__
+    - [RStudio license renewal](AWS/rstudio.license.renewal.md)
+    
 
 
 
