@@ -35,6 +35,7 @@ This includes notably:
 
  - __AWS__
     - [RStudio license renewal](AWS/rstudio.license.renewal.md)
+    - [AWS Secure Token Service (STS) ](AWS/sts.assume.role.md)
     
 
 
